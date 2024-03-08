@@ -1,0 +1,673 @@
+Program.Sub.ScreenSU.Start
+gui.SS_Contacts..create
+gui.SS_Contacts..caption("CRM Contact Lookup")
+gui.SS_Contacts..size(17580,8940)
+gui.SS_Contacts..minx(0)
+gui.SS_Contacts..miny(0)
+gui.SS_Contacts..position(5040,2940)
+gui.SS_Contacts..event(unload,Unload)
+gui.SS_Contacts..alwaysontop(False)
+gui.SS_Contacts..fontname("Arial")
+gui.SS_Contacts..fontsize(8)
+gui.SS_Contacts..forecolor(0)
+gui.SS_Contacts..fontstyle(,,,,)
+gui.SS_Contacts..BackColor(-2147483633)
+gui.SS_Contacts..controlbox(True)
+gui.SS_Contacts..maxbutton(False)
+gui.SS_Contacts..minbutton(False)
+gui.SS_Contacts..mousepointer(0)
+gui.SS_Contacts..moveable(True)
+gui.SS_Contacts..sizeable(False)
+gui.SS_Contacts..ShowInTaskBar(True)
+gui.SS_Contacts..titlebar(True)
+gui.SS_Contacts.lbl_ddlType.create(label,"Contact Type",True,1800,200,1,100,135,True,0,Arial,8,-2147483633,0)
+gui.SS_Contacts.lbl_ddlType.defaultvalue("")
+gui.SS_Contacts.lbl_ddlType.controlgroup(0)
+gui.SS_Contacts.ddlType.create(dropdownlist)
+gui.SS_Contacts.ddlType.visible(True)
+gui.SS_Contacts.ddlType.size(1800,330)
+gui.SS_Contacts.ddlType.zorder(0)
+gui.SS_Contacts.ddlType.position(100,335)
+gui.SS_Contacts.ddlType.enabled(True)
+gui.SS_Contacts.ddlType.fontname("Arial")
+gui.SS_Contacts.ddlType.fontsize(8)
+gui.SS_Contacts.ddlType.event(click,PopulateGrid)
+gui.SS_Contacts.ddlType.defaultvalue("")
+gui.SS_Contacts.ddlType.controlgroup(0)
+gui.SS_Contacts.lbl_ddlFieldSearch.create(label,"Search By",True,1800,200,1,1985,135,True,0,Arial,8,-2147483633,0)
+gui.SS_Contacts.lbl_ddlFieldSearch.defaultvalue("")
+gui.SS_Contacts.lbl_ddlFieldSearch.controlgroup(0)
+gui.SS_Contacts.ddlFieldSearch.create(dropdownlist)
+gui.SS_Contacts.ddlFieldSearch.visible(True)
+gui.SS_Contacts.ddlFieldSearch.size(1800,330)
+gui.SS_Contacts.ddlFieldSearch.zorder(0)
+gui.SS_Contacts.ddlFieldSearch.position(1985,335)
+gui.SS_Contacts.ddlFieldSearch.enabled(True)
+gui.SS_Contacts.ddlFieldSearch.fontname("Arial")
+gui.SS_Contacts.ddlFieldSearch.fontsize(8)
+gui.SS_Contacts.ddlFieldSearch.defaultvalue("")
+gui.SS_Contacts.ddlFieldSearch.controlgroup(0)
+gui.SS_Contacts.lbl_txtSearch.create(label,"Search",True,1800,200,1,3870,135,True,0,Arial,8,-2147483633,0)
+gui.SS_Contacts.lbl_txtSearch.defaultvalue("")
+gui.SS_Contacts.lbl_txtSearch.controlgroup(0)
+gui.SS_Contacts.txtSearch.create(textbox,"",True,3600,330,0,3870,335,True,0,Arial,8,16777215,1)
+gui.SS_Contacts.txtSearch.defaultvalue("")
+gui.SS_Contacts.txtSearch.controlgroup(0)
+gui.SS_Contacts.cmdOK.create(button)
+gui.SS_Contacts.cmdOK.caption("Submit")
+gui.SS_Contacts.cmdOK.visible(True)
+gui.SS_Contacts.cmdOK.size(1000,360)
+gui.SS_Contacts.cmdOK.zorder(0)
+gui.SS_Contacts.cmdOK.position(100,7900)
+gui.SS_Contacts.cmdOK.enabled(True)
+gui.SS_Contacts.cmdOK.fontname("Arial")
+gui.SS_Contacts.cmdOK.fontsize(8)
+gui.SS_Contacts.cmdOK.event(click,Submit)
+gui.SS_Contacts.cmdOK.defaultvalue("")
+gui.SS_Contacts.cmdOK.controlgroup(0)
+gui.SS_Contacts.gsfgContacts.create(gsflexgrid)
+gui.SS_Contacts.gsfgContacts.FixedRows(0)
+gui.SS_Contacts.gsfgContacts.FixedCols(0)
+gui.SS_Contacts.gsfgContacts.visible(True)
+gui.SS_Contacts.gsfgContacts.size(17085,7005)
+gui.SS_Contacts.gsfgContacts.zorder(0)
+gui.SS_Contacts.gsfgContacts.position(100,800)
+gui.SS_Contacts.gsfgContacts.enabled(True)
+gui.SS_Contacts.gsfgContacts.event(mouseup,gsflexgrid1_commandclick)
+gui.SS_Contacts.cmdSearch.create(button)
+gui.SS_Contacts.cmdSearch.caption("Search")
+gui.SS_Contacts.cmdSearch.visible(True)
+gui.SS_Contacts.cmdSearch.size(1000,375)
+gui.SS_Contacts.cmdSearch.zorder(0)
+gui.SS_Contacts.cmdSearch.position(7600,275)
+gui.SS_Contacts.cmdSearch.enabled(True)
+gui.SS_Contacts.cmdSearch.fontname("Arial")
+gui.SS_Contacts.cmdSearch.fontsize(8)
+gui.SS_Contacts.cmdSearch.event(click,cmdsearch_click)
+gui.SS_Contacts.cmdSearch.defaultvalue("")
+gui.SS_Contacts.cmdSearch.controlgroup(0)
+gui.SS_Contacts.cmdRefresh.create(button)
+gui.SS_Contacts.cmdRefresh.caption("Refresh")
+gui.SS_Contacts.cmdRefresh.visible(True)
+gui.SS_Contacts.cmdRefresh.size(1000,375)
+gui.SS_Contacts.cmdRefresh.zorder(0)
+gui.SS_Contacts.cmdRefresh.position(8675,275)
+gui.SS_Contacts.cmdRefresh.enabled(True)
+gui.SS_Contacts.cmdRefresh.fontname("Arial")
+gui.SS_Contacts.cmdRefresh.fontsize(8)
+gui.SS_Contacts.cmdRefresh.event(click,PopulateGrid)
+gui.SS_Contacts.cmdRefresh.defaultvalue("")
+gui.SS_Contacts.cmdRefresh.controlgroup(0)
+
+
+Program.Sub.ScreenSU.End
+
+Program.Sub.Preflight.Start
+
+Variable.UDT.uContacts.Define("Select",Boolean)
+Variable.UDT.uContacts.Define("Name_First",String,Name_First)
+Variable.UDT.uContacts.Define("Name_Last",String,Name_Last)
+Variable.UDT.uContacts.Define("Email",String,Email1)
+Variable.UDT.uContacts.Define("Company",String,Cust)
+Variable.UDT.uContacts.Define("Address",String,Address_1)
+Variable.UDT.uContacts.Define("City",String,City)
+Variable.UDT.uContacts.Define("State",String,State)
+Variable.UDT.uContacts.Define("Zip",String,Zip)
+Variable.UDT.uContacts.Define("Phone",String,Phone1)
+Variable.UDT.uContacts.Define("Fax",String,Fax1)
+Variable.uGlobal.uContacts.Declare("uContacts")
+
+Variable.UDT.uGUser.Define("Select",Boolean)
+Variable.UDT.uGUser.Define("First_Name",String,First_Name)
+Variable.UDT.uGUser.Define("Last_Name",String,Last_Name)
+Variable.UDT.uGUser.Define("Email",String,Email)
+Variable.UDT.uGUser.Define("Company",String,Company)
+Variable.uGlobal.uGUser.Declare("uGUser")
+Variable.Global.sSearchBy.Declare(String)
+Variable.Global.sSearchField.Declare(String)
+Program.Sub.Preflight.End
+
+Program.Sub.Main.Start
+F.Intrinsic.Control.SetErrorHandler("Main_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String)
+
+'ERM
+'Quote 4676
+' This GAB program will allow a user to view and search for Contacts (vendor,customer,prospects,suspects,and GSS users).
+' Select a "Contact Type" from the drop down list to populate the grid with ALL the contacts for that specific contact type selected.
+' To narrow the list of contacts, select a column name from the "Search By" drop down list, enter criteria in the "Search Field" and click "Search button.
+' Click Refresh button to re-populate the grid after a seach has been completed.
+' Check the checkbox in the first column of each row if that is the contact you would like to include in the email.
+' Click Submit button to pass the emails to the other GAB screen.
+' NOTE: If the contact email address is blank, the email address cannot be passed.
+' NOTE: If no emails were selected "***NO RETURN***" will be passed back.
+' NOTE: A user can sort the grid column headings asc or desc by clicking on the top column header .
+' NOTE: The Search feature is case-sensitive. ex: searching for ERIC is not the same as seaching for Eric.
+
+'Workflow:
+' The subroutine PopulateGrid is used for a selected "Contact Type" listed in DDL1 except for contact type "GSS User" which uses the subroutine GssUser.
+' Search button:  uses subroutine GssUserSearch will populate the grid during a search for the contact type "Gss User". Subroutine cmdsearch_click will be used to search for all other contact types.
+' Refresh button: uses subroutine PopulateGrid to pull ALL contacts in the grid for a specfic "Contact type".
+' Submit button: uses subroutine Submit to get the email address for each row with a check in the checkbox column of the grid
+F.Intrinsic.Control.If(V.Caller.Hook,=,42200)
+	F.ODBC.Connection!con.OpenConnection(V.Ambient.PDSN,V.Ambient.PUser,V.Ambient.PPass)
+	'Opening connection to common database
+	F.ODBC.Connection!conX.OpenConnection(V.Ambient.Ccon,V.Ambient.Cuser,V.Ambient.Cpass)
+	'populate "Contact type" drop down list
+	F.Intrinsic.Control.CallSub(Populateddl1)
+	'apply grid header and styles
+	F.Intrinsic.Control.CallSub(Buildstyle)
+	'show form
+	Gui.SS_Contacts..Show
+F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("Main_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	Function.Intrinsic.String.Concat("Project: GCG_3554_CRM_Contact_Lookup_Cert.gas",V.Ambient.Newline,V.Ambient.Newline,"Subroutine: ",V.Ambient.CurrentSubroutine,V.Ambient.NewLine,"Error Occurred ",V.Ambient.ErrorNumber," with description ",V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(Unload)
+Function.Intrinsic.Control.EndIf
+
+
+Program.Sub.Main.End
+
+Program.Sub.Unload.Start
+F.Intrinsic.Control.SetErrorHandler("Unload_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String)
+
+F.ODBC.Connection!con.Close
+F.ODBC.Connection!conX.Close
+F.Intrinsic.Control.End
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("Unload_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	Function.Intrinsic.String.Concat("Project: GCG_3554_CRM_Contact_Lookup_Cert.gas",V.Ambient.Newline,V.Ambient.Newline,"Subroutine: ",V.Ambient.CurrentSubroutine,V.Ambient.NewLine,"Error Occurred ",V.Ambient.ErrorNumber," with description ",V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(Unload)
+Function.Intrinsic.Control.EndIf
+
+Program.Sub.Unload.End
+
+Program.Sub.populateDDL1.Start
+F.Intrinsic.Control.SetErrorHandler("populateDDL_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String)
+V.Local.i.Declare(Long)
+V.Local.sContactType.Declare(String)
+V.Local.sSearchBy.Declare(String)
+
+'Add "contact type" to DDL1 here, delimited by *!*
+V.Local.sContactType.Set("*!*Customer*!*Prospect*!*Suspect*!*Vendor*!*GSS User")
+F.Intrinsic.String.Split(V.Local.sContactType,"*!*",V.Local.sContactType)
+F.Intrinsic.Control.For(V.Local.i,V.Local.sContactType.LBound,V.Local.sContactType.UBound,1)
+	Gui.SS_Contacts.ddlType.AddItem(V.Local.sContactType(v.Local.i).Trim,V.Local.i)
+F.Intrinsic.Control.Next(V.Local.i)
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("populateDDL_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	Function.Intrinsic.String.Concat("Project: GCG_3554_CRM_Contact_Lookup_Cert.gas",V.Ambient.Newline,V.Ambient.Newline,"Subroutine: ",V.Ambient.CurrentSubroutine,V.Ambient.NewLine,"Error Occurred ",V.Ambient.ErrorNumber," with description ",V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(Unload)
+Function.Intrinsic.Control.EndIf
+
+Program.Sub.populateDDL1.End
+
+Program.Sub.BuildStyle.Start
+F.Intrinsic.Control.SetErrorHandler("BuildFlex_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String)
+V.Local.i.Declare(Long)
+V.Local.sHeader.Declare(String)
+V.Local.sWidth.Declare(String)
+
+Gui.SS_Contacts.gsfgContacts.Cols(11)
+Gui.SS_Contacts.gsfgContacts.Rows(1)
+Gui.SS_Contacts.gsfgContacts.Rows(2)
+Gui.SS_Contacts.gsfgContacts.FixedRows(1)
+
+'build header row name and width on grid
+V.Local.sHeader.Set("*!*First Name*!*Last Name*!*Email*!*Company*!*Address*!*City*!*State*!*Zip*!*Phone*!*Fax")
+V.Local.sWidth.Set("500*!*2000*!*2000*!*2000*!*1000*!*2000*!*1500*!*700*!*1000*!*2000*!*2000")
+F.Intrinsic.String.Split(V.Local.sHeader,"*!*",V.Local.sHeader)
+F.Intrinsic.String.Split(V.Local.sWidth,"*!*",V.Local.sWidth)
+
+'create header row text
+F.Intrinsic.Control.For(V.Local.i,V.Local.sHeader.LBound,V.Local.sHeader.UBound,1)
+	Gui.SS_Contacts.gsfgContacts.TextMatrix(V.Local.i,0,V.Local.sHeader(v.Local.i).Trim)
+F.Intrinsic.Control.Next(V.Local.i)
+
+'create header row width
+F.Intrinsic.Control.For(V.Local.i,V.Local.sWidth.LBound,V.Local.sWidth.UBound,1)
+	Gui.SS_Contacts.gsfgContacts.ColWidth(V.Local.i,V.Local.sWidth(v.Local.i).Trim)
+F.Intrinsic.Control.Next(V.Local.i)
+
+'Style flex grid rows
+Gui.SS_Contacts.gsfgContacts.BuildStyle(1,0,"Type","Checkbox",True)
+F.Intrinsic.Control.For(V.Local.i,1,10,1)
+	Gui.SS_Contacts.gsfgContacts.BuildStyle(1,V.Local.i,"Format","Alignment",2)
+	Gui.SS_Contacts.gsfgContacts.BuildStyle(1,V.Local.i,"Type","Locked",True)
+F.Intrinsic.Control.Next(V.Local.i)
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("BuildFlex_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	Function.Intrinsic.String.Concat("Project: GCG_3554_CRM_Contact_Lookup_Cert.gas",V.Ambient.Newline,V.Ambient.Newline,"Subroutine: ",V.Ambient.CurrentSubroutine,V.Ambient.NewLine,"Error Occurred ",V.Ambient.ErrorNumber," with description ",V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(Unload)
+Function.Intrinsic.Control.EndIf
+
+
+Program.Sub.BuildStyle.End
+
+program.sub.Submit.start
+F.Intrinsic.Control.SetErrorHandler("cmdok_click_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String)
+V.Local.iC.Declare(Long)
+V.Local.iRow.Declare(Long)
+V.Local.sRow.Declare(String)
+V.Local.sTemp.Declare(String)
+V.Local.sRecipients.Declare(String)
+
+F.Intrinsic.Math.Sub(V.Screen.SS_Contacts!gsfgContacts.Rows,1,V.Local.iC)
+
+F.Intrinsic.Control.For(V.Local.iRow,1,V.Local.iC,1)
+	Gui.SS_Contacts.gsfgContacts.ReadRow(V.Local.iRow,V.Local.sRow)
+	F.Intrinsic.String.Split(V.Local.sRow,"*!*",V.Local.sRow)
+
+	F.Intrinsic.Control.If(V.Local.sRow(0),=,1)
+		F.Intrinsic.Control.If(V.Local.sTemp,=,"")
+			V.Local.sTemp.Set(V.Local.sRow(3))
+		F.Intrinsic.Control.Else
+			F.Intrinsic.String.Build("{0}|~|{1}",V.Local.sTemp,V.Local.sRow(3),V.Local.sTemp)
+		F.Intrinsic.Control.EndIf
+	F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.Next(V.Local.iRow)
+
+V.Local.sRecipients.Set(V.Passed.ail-lstRecipients)
+F.Intrinsic.Debug.InvokeDebugger
+F.Intrinsic.Debug.Stop
+
+F.Intrinsic.Control.If(V.Local.sRecipients.Trim,<>,"")
+	F.Intrinsic.String.Build("{0}|~|{1}",V.Local.sRecipients,V.Local.sTemp,V.Local.sTemp)
+F.Intrinsic.Control.EndIf
+
+V.Passed.ail-lstRecipients.Set(V.Local.sTemp)
+
+F.Intrinsic.Control.CallSub(Unload)
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("cmdok_click_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	Function.Intrinsic.String.Concat("Project: GCG_3554_CRM_Contact_Lookup_Cert.gas",V.Ambient.Newline,V.Ambient.Newline,"Subroutine: ",V.Ambient.CurrentSubroutine,V.Ambient.NewLine,"Error Occurred ",V.Ambient.ErrorNumber," with description ",V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(Unload)
+Function.Intrinsic.Control.EndIf
+
+program.sub.Submit.end
+
+Program.Sub.PopulateGrid.Start
+F.Intrinsic.Control.SetErrorHandler("PopulateDDL2_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String)
+V.Local.sContact.Declare(String)
+V.Local.sContactType.Declare(String)
+V.Local.sMsg.Declare(String)
+V.Local.sSQL.Declare(String)
+V.Local.sRows.Declare(String)
+V.Local.iR.Declare(Long,1)
+V.Local.iRow.Declare(Long)
+V.Local.i.Declare(Long)
+V.Local.sSearchField.Declare(String)
+V.Local.sSearchBy.Declare(String)
+V.uGlobal.uContacts.Redim(-1,-1)
+
+'check if "contact type" has been selected in DDL1
+V.Local.sContact.Set(V.Screen.SS_Contacts!ddlType.Text)
+F.Intrinsic.Control.If(V.Local.sContact.Trim,=,"")
+	F.Intrinsic.Control.ExitSub
+F.Intrinsic.Control.EndIf
+
+'which contact type is selected for sql statement
+F.Intrinsic.Control.SelectCase(V.Local.sContact)
+	F.Intrinsic.Control.Case("Customer")
+		V.Local.sContactType.Set("C")
+	F.Intrinsic.Control.Case("Prospect")
+		V.Local.sContactType.Set("P")
+	F.Intrinsic.Control.Case("Suspect")
+		V.Local.sContactType.Set("S")
+	F.Intrinsic.Control.Case("Vendor")
+		V.Local.sContactType.Set("V")
+	F.Intrinsic.Control.Case("GSS User")
+		F.Intrinsic.Control.CallSub(Gssuser)
+		F.Intrinsic.Control.ExitSub
+F.Intrinsic.Control.EndSelect
+
+'populate DDL2
+Gui.SS_Contacts.txtSearch.Text("")
+Gui.SS_Contacts.ddlFieldSearch.ClearItems
+V.Local.sSearchBy.Set("*!*First Name*!*Last Name*!*Email*!*Company*!*Address*!*City*!*State*!*Zip*!*Phone*!*Fax")
+F.Intrinsic.String.Split(V.Local.sSearchBy,"*!*",V.Local.sSearchBy)
+
+F.Intrinsic.Control.For(V.Local.i,V.Local.sSearchBy.LBound,V.Local.sSearchBy.UBound,1)
+	Gui.SS_Contacts.ddlFieldSearch.AddItem(V.Local.sSearchBy(v.Local.i).Trim,V.Local.i)
+F.Intrinsic.Control.Next(V.Local.i)
+
+'Load ALL records for "Contact type" selected to UDT
+F.Intrinsic.String.Build("Loading {0}s...",V.Local.sContact,V.Local.sMsg)
+F.Intrinsic.UI.InvokeWaitDialog(V.Local.sMsg,"Please Wait...")
+F.Intrinsic.String.Build("Select Name_First,Name_Last, Email1, Cust, Address_1, City, State, Zip, Phone1, Fax1 From V_Contact Where TYPE = '{0}' Order By Name_First, Name_Last",V.Local.sContactType,V.Local.sSQL)
+F.ODBC.Connection!con.OpenLocalRecordsetRO("rst",V.Local.sSQL)
+
+F.Intrinsic.Control.If(V.ODBC.con!rst.EOF,=,True)
+	Gui.SS_Contacts.gsfgContacts.Visible(False)
+	F.Intrinsic.Control.CallSub(Buildstyle)
+	Gui.SS_Contacts.gsfgContacts.Visible(True)
+F.Intrinsic.Control.Else
+	Gui.SS_Contacts.gsfgContacts.Visible(False)
+	F.Intrinsic.Control.CallSub(Buildstyle)
+	F.Intrinsic.Variable.LoadUDTFromRecordset("con","rst","v.uGlobal.uContacts",True)
+	Gui.SS_Contacts.gsfgContacts.LoadFromUDT("V.uGlobal.uContacts","Select*!*Name_First*!*Name_Last*!*Email*!*Company*!*Address*!*City*!*State*!*Zip*!*Phone*!*Fax",1)
+	Gui.SS_Contacts.gsfgContacts.Visible(True)
+F.Intrinsic.Control.EndIf
+
+F.ODBC.con!rst.Close
+
+F.Intrinsic.UI.CloseWaitDialog
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("PopulateDDL2_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	Function.Intrinsic.String.Concat("Project: GCG_3554_CRM_Contact_Lookup_Cert.gas",V.Ambient.Newline,V.Ambient.Newline,"Subroutine: ",V.Ambient.CurrentSubroutine,V.Ambient.NewLine,"Error Occurred ",V.Ambient.ErrorNumber," with description ",V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(Unload)
+Function.Intrinsic.Control.EndIf
+
+Program.Sub.PopulateGrid.End
+
+program.sub.gsflexgrid1_commandclick.start
+F.Intrinsic.Control.SetErrorHandler("gsflexgrid1_commandclick_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String)
+V.Local.sRet.Declare(String)
+V.Local.iRow.Declare(Long)
+V.Local.sRuntime.Declare(String)
+
+V.Local.sRuntime.Set(V.Ambient.GABVersion)
+
+F.Intrinsic.Control.If(V.Local.sRuntime.Left1,=,"2")
+	Gui.SS_Contacts.gsfgContacts.EnableColumnSort(true,V.Args.MOUSECOL)
+F.Intrinsic.Control.Else
+	'Sort columns headers on grid by asc or desc
+	Gui.SS_Contacts.gsfgContacts.GetTextMatrix(V.Args.MOUSECOL,V.Args.MOUSEROW,V.Local.sRet)
+	F.Intrinsic.Control.SelectCase(V.Local.sRet.Trim)
+		F.Intrinsic.Control.Case("First Name")
+			Gui.SS_Contacts.gsfgContacts.SortColumn(1,0)
+		F.Intrinsic.Control.Case("Last Name")
+			Gui.SS_Contacts.gsfgContacts.SortColumn(2,0)
+		F.Intrinsic.Control.Case("Email")
+			Gui.SS_Contacts.gsfgContacts.SortColumn(3,0)
+		F.Intrinsic.Control.Case("Company")
+			Gui.SS_Contacts.gsfgContacts.SortColumn(4,0)
+		F.Intrinsic.Control.Case("Address")
+			Gui.SS_Contacts.gsfgContacts.SortColumn(5,0)
+		F.Intrinsic.Control.Case("City")
+			Gui.SS_Contacts.gsfgContacts.SortColumn(6,0)
+		F.Intrinsic.Control.Case("State")
+			Gui.SS_Contacts.gsfgContacts.SortColumn(7,0)
+		F.Intrinsic.Control.Case("Zip")
+			Gui.SS_Contacts.gsfgContacts.SortColumn(8,0)
+		F.Intrinsic.Control.Case("Phone")
+			Gui.SS_Contacts.gsfgContacts.SortColumn(8,0)
+		F.Intrinsic.Control.Case("Fax")
+			Gui.SS_Contacts.gsfgContacts.SortColumn(9,0)
+	F.Intrinsic.Control.EndSelect
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("gsflexgrid1_commandclick_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	Function.Intrinsic.String.Concat("Project: GCG_3554_CRM_Contact_Lookup_Cert.gas",V.Ambient.Newline,V.Ambient.Newline,"Subroutine: ",V.Ambient.CurrentSubroutine,V.Ambient.NewLine,"Error Occurred ",V.Ambient.ErrorNumber," with description ",V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(Unload)
+Function.Intrinsic.Control.EndIf
+
+program.sub.gsflexgrid1_commandclick.end
+
+program.sub.cmdsearch_click.start
+F.Intrinsic.Control.SetErrorHandler("cmdsearch_click_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String)
+V.Local.sSQL.Declare(String)
+V.Local.sContact.Declare(String)
+V.Local.sContactType.Declare(String)
+V.Local.i.Declare(Long)
+V.Local.iR.Declare(Long,1)
+V.Local.iRow.Declare(Long)
+V.uGlobal.uContacts.Redim(-1,-1)
+
+'make sure criteria is selected (on GAB screen) to perform a search
+V.Local.sContact.Set(V.Screen.SS_Contacts!ddlType.Text)
+V.Global.sSearchBy.Set(V.Screen.SS_Contacts!ddlFieldSearch.Text)
+V.Global.sSearchField.Set(V.Screen.SS_Contacts!txtSearch.Text)
+
+F.Intrinsic.Control.If(V.Local.sContact.Trim,=,"")
+	F.Intrinsic.UI.Msgbox("Please select a contact type.")
+	F.Intrinsic.Control.ExitSub
+F.Intrinsic.Control.ElseIf(V.Global.sSearchBy.Trim,=,"")
+	F.Intrinsic.UI.Msgbox("Please select search by criteria.")
+	F.Intrinsic.Control.ExitSub
+F.Intrinsic.Control.ElseIf(V.Global.sSearchField.Trim,=,"")
+	F.Intrinsic.UI.Msgbox("Please include search field criteria.")
+	F.Intrinsic.Control.ExitSub
+F.Intrinsic.Control.EndIf
+
+'put percent mark around word to search in database. ex: %USE%
+F.Intrinsic.String.Build("%{0}%",V.Global.sSearchField,V.Global.sSearchField)
+
+'which "contact type" is selected for sql statement
+F.Intrinsic.Control.SelectCase(V.Local.sContact)
+	F.Intrinsic.Control.Case("Customer")
+		V.Local.sContactType.Set("C")
+	F.Intrinsic.Control.Case("Prospect")
+		V.Local.sContactType.Set("P")
+	F.Intrinsic.Control.Case("Suspect")
+		V.Local.sContactType.Set("S")
+	F.Intrinsic.Control.Case("Vendor")
+		V.Local.sContactType.Set("V")
+	F.Intrinsic.Control.Case("GSS User")
+		F.Intrinsic.Control.CallSub(Gssusersearch)
+		F.Intrinsic.Control.ExitSub
+F.Intrinsic.Control.EndSelect
+
+'get column name ddl "search by" for sql statement
+F.Intrinsic.Control.SelectCase(V.Global.sSearchBy)
+	F.Intrinsic.Control.Case("First Name")
+		V.Global.sSearchBy.Set("Name_First")
+	F.Intrinsic.Control.Case("Last Name")
+		V.Global.sSearchBy.Set("Name_Last")
+	F.Intrinsic.Control.Case("Email")
+		V.Global.sSearchBy.Set("Email1")
+	F.Intrinsic.Control.Case("Company")
+		V.Global.sSearchBy.Set("Cust")
+	F.Intrinsic.Control.Case("Address")
+		V.Global.sSearchBy.Set("Address_1")
+	F.Intrinsic.Control.Case("City")
+		V.Global.sSearchBy.Set("City")
+	F.Intrinsic.Control.Case("State")
+		V.Global.sSearchBy.Set("State")
+	F.Intrinsic.Control.Case("Zip")
+		V.Global.sSearchBy.Set("Zip")
+	F.Intrinsic.Control.Case("Phone")
+		V.Global.sSearchBy.Set("Phone1")
+	F.Intrinsic.Control.Case("Fax")
+		V.Global.sSearchBy.Set("Fax1")
+F.Intrinsic.Control.EndSelect
+
+F.Intrinsic.String.Build("Select Name_First,Name_Last, Email1, Cust, Address_1, City, State, Zip, Phone1, Fax1 From V_Contact Where TYPE = '{0}' and {1} LIKE '{2}' Order By Name_First, Name_Last",V.Local.sContactType,V.Global.sSearchBy,V.Global.sSearchField,V.Local.sSQL)
+F.ODBC.Connection!con.OpenLocalRecordsetRO("rst",V.Local.sSQL)
+
+F.Intrinsic.Control.If(V.ODBC.con!rst.EOF,=,True)
+	Gui.SS_Contacts.gsfgContacts.Visible(False)
+	F.Intrinsic.Control.CallSub(Buildstyle)
+	Gui.SS_Contacts.gsfgContacts.Visible(True)
+F.Intrinsic.Control.Else
+	Gui.SS_Contacts.gsfgContacts.Visible(False)
+	F.Intrinsic.Control.CallSub(Buildstyle)
+	F.Intrinsic.Variable.LoadUDTFromRecordset("con","rst","v.uGlobal.uContacts",True)
+	Gui.SS_Contacts.gsfgContacts.LoadFromUDT("V.uGlobal.uContacts","Select*!*Name_First*!*Name_Last*!*Email*!*Company*!*Address*!*City*!*State*!*Zip*!*Phone*!*Fax",1)
+	Gui.SS_Contacts.gsfgContacts.Visible(True)
+F.Intrinsic.Control.EndIf
+
+F.ODBC.con!rst.Close
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("cmdsearch_click_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	Function.Intrinsic.String.Concat("Project: GCG_3554_CRM_Contact_Lookup_Cert.gas",V.Ambient.Newline,V.Ambient.Newline,"Subroutine: ",V.Ambient.CurrentSubroutine,V.Ambient.NewLine,"Error Occurred ",V.Ambient.ErrorNumber," with description ",V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(Unload)
+Function.Intrinsic.Control.EndIf
+
+
+program.sub.cmdsearch_click.end
+
+Program.Sub.GssUser.Start
+F.Intrinsic.Control.SetErrorHandler("GssUser_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String)
+V.Local.sSQL.Declare(String)
+V.Local.i.Declare(Long)
+V.Local.iRow.Declare(Long)
+V.Local.iR.Declare(Long,1)
+V.Local.sSearchBy.Declare(String)
+V.uGlobal.uGUser.Redim(-1,-1)
+
+'Load DDL2 "Search By"
+Gui.SS_Contacts.txtSearch.Text("")
+Gui.SS_Contacts.ddlFieldSearch.ClearItems
+V.Local.sSearchBy.Set("*!*First Name*!*Last Name*!*Email*!*Company")
+F.Intrinsic.String.Split(V.Local.sSearchBy,"*!*",V.Local.sSearchBy)
+
+F.Intrinsic.Control.For(V.Local.i,V.Local.sSearchBy.LBound,V.Local.sSearchBy.UBound,1)
+	Gui.SS_Contacts.ddlFieldSearch.AddItem(V.Local.sSearchBy(v.Local.i).Trim,V.Local.i)
+F.Intrinsic.Control.Next(V.Local.i)
+
+'Load All GSS Users to UDT
+Gui.SS_Contacts.gsfgContacts.Visible(False)
+F.Intrinsic.Control.CallSub(Buildstyle)
+F.Intrinsic.UI.InvokeWaitDialog("Loading GSS Users...","Please Wait...")
+F.Intrinsic.String.Build("Select First_Name, Last_Name, Email, Company From USER_INFORMATION Where First_Name <> '{0}' Order By First_Name, Last_Name","",V.Local.sSQL)
+F.ODBC.Connection!conX.OpenLocalRecordsetRO("rstC",V.Local.sSQL)
+
+F.Intrinsic.Control.If(V.ODBC.conX!rstC.EOF,=,False)
+	F.Intrinsic.Variable.LoadUDTFromRecordset("conX","rstC","v.uGlobal.uGUser",True)
+F.Intrinsic.Control.EndIf
+
+F.ODBC.conX!rstC.Close
+
+Gui.SS_Contacts.gsfgContacts.Visible(False)
+Gui.SS_Contacts.gsfgContacts.LoadFromUDT("V.uGlobal.uGUser","Select*!*First_Name*!*Last_Name*!*Email*!*Company",1)
+Gui.SS_Contacts.gsfgContacts.Visible(True)
+
+F.Intrinsic.UI.CloseWaitDialog
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("GssUser_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	Function.Intrinsic.String.Concat("Project: GCG_3554_CRM_Contact_Lookup_Cert.gas",V.Ambient.Newline,V.Ambient.Newline,"Subroutine: ",V.Ambient.CurrentSubroutine,V.Ambient.NewLine,"Error Occurred ",V.Ambient.ErrorNumber," with description ",V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(Unload)
+Function.Intrinsic.Control.EndIf
+
+Program.Sub.GssUser.End
+
+Program.Sub.GssUserSearch.Start
+F.Intrinsic.Control.SetErrorHandler("GssUserSearch_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String)
+V.Local.sSQL.Declare(String)
+V.Local.i.Declare(Long)
+V.Local.iR.Declare(Long,1)
+V.Local.iRow.Declare(Long)
+V.uGlobal.uGUser.Redim(-1,-1)
+
+'get column name to search by
+F.Intrinsic.Control.SelectCase(V.Global.sSearchBy)
+	F.Intrinsic.Control.Case("First Name")
+		V.Global.sSearchBy.Set("First_Name")
+	F.Intrinsic.Control.Case("Last Name")
+		V.Global.sSearchBy.Set("Last_Name")
+	F.Intrinsic.Control.Case("Email")
+		V.Global.sSearchBy.Set("Email")
+	F.Intrinsic.Control.Case("Company")
+		V.Global.sSearchBy.Set("Company")
+F.Intrinsic.Control.EndSelect
+
+'query search and load to UDT
+Gui.SS_Contacts.gsfgContacts.Visible(False)
+Gui.SS_Contacts.gsfgContacts.Rows(1)
+F.Intrinsic.Control.CallSub(Buildstyle)
+F.Intrinsic.String.Build("Select First_Name, Last_Name, Email, Company From USER_INFORMATION Where {0} LIKE '{1}' Order By First_Name, Last_Name",V.Global.sSearchBy,V.Global.sSearchField,V.Local.sSQL)
+F.ODBC.Connection!conX.OpenLocalRecordsetRO("rstC",V.Local.sSQL)
+
+F.Intrinsic.Control.If(V.ODBC.conX!rstC.EOF,=,False)
+	F.Intrinsic.Variable.LoadUDTFromRecordset("conX","rstC","v.uGlobal.uGUser",True)
+F.Intrinsic.Control.EndIf
+
+F.ODBC.conX!rstC.Close
+Gui.SS_Contacts.gsfgContacts.LoadFromUDT("V.uGlobal.uGUser","Select*!*First_Name*!*Last_Name*!*Email*!*Company",1)
+Gui.SS_Contacts.gsfgContacts.Visible(True)
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("GssUserSearch_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	Function.Intrinsic.String.Concat("Project: GCG_3554_CRM_Contact_Lookup_Cert.gas",V.Ambient.Newline,V.Ambient.Newline,"Subroutine: ",V.Ambient.CurrentSubroutine,V.Ambient.NewLine,"Error Occurred ",V.Ambient.ErrorNumber," with description ",V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(Unload)
+Function.Intrinsic.Control.EndIf
+
+Program.Sub.GssUserSearch.End
+
+Program.Sub.Comments.Start
+${$0$}$GCG_CRM_Contact_Lookup$}$ERIC$}$6/28/2013
+${$1$}$$}$$}$0$}$42200$}$Email Recipient Browser$}$10/28/2015 10:48:06 AM$}$(Program: CRPreviewNet.exe; Screen: )
+
+${$3$}$0$}$$}$-1$}$-1$}$$}$1/1/1900$}$'Quote 4676
+ERM
+
+This script is to run from the BI Report Previewer screen. This interface will display all GSS contacts.
+${$4$}$0$}$$}$0$}$-1$}$BCC$}$10/27/2015 1:11:26 PM$}$GS Certified. Error handling added. Code sped up. Code updated.
+Program.Sub.Comments.End
+Program.Sub.ScreenSS.Start
+SS_Form1{{CAPTION::CRM Contact Lookup
+SS_Form1.CTRL{{NAME::ddlType\\TYPE::4\\CAPTION::Contact Type\\VALUE::*!*Company*!*Prospect*!*Suspect*!*Vendor*!*GSS User\\GROUP::1\\BROWSER::0\\SIZE::1
+SS_Form1.CTRL{{NAME::ddlFieldSearch\\TYPE::4\\CAPTION::Search By\\VALUE::*!*First Name*!*Last Name*!*Email*!*Company Name*!*Address*!*City*!*State*!*Zip*!*Phone*!*Fax\\GROUP::1\\BROWSER::0\\SIZE::1
+SS_Form1.CTRL{{NAME::txtSearch\\TYPE::2\\CAPTION::Search\\GROUP::1\\BROWSER::0\\SIZE::2
+SS_Form1.CTRL{{NAME::cmdOK\\TYPE::5\\CAPTION::OK\\GROUP::-1\\BROWSER::0\\SIZE::1
+
+Program.Sub.ScreenSS.End
+
